@@ -13,11 +13,10 @@ public class Jumper : MonoBehaviour
 
     private Coroutine _jumpAnimation;
 
-
     [ContextMenu("Play Jump Animation")]
     public void PlayJumpAnimation(Data data)
     {
-        _jumpAnimation = StartCoroutine(AnimateJump(data));
+       _jumpAnimation = StartCoroutine(AnimateJump(data));
     }
 
     public void Interrupt()
@@ -41,8 +40,6 @@ public class Jumper : MonoBehaviour
 
             var position = new Vector2(transform.position.x,
                 posY);
-
-            transform.position = (position);
 
             yield return null;
         }
