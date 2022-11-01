@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,5 +10,16 @@ public class Player : MonoBehaviour
 
     public Jumper Jumper => _jumper;
     public Movement Movement => _movement;
+
+    public void TryClimb(float vertical)
+    {
+        if (Movement.InterructedWithLadder == false)
+        {
+            Movement.ResetGravity();
+            return;
+        }
+
+        Movement.AddStaticHorizontalVelocity(vertical);
+    }
 
 }
