@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : PhysicsEventBroadcaster
 {
     [SerializeField]
     private Jumper _jumper;
@@ -10,6 +10,14 @@ public class Player : MonoBehaviour
 
     public Jumper Jumper => _jumper;
     public Movement Movement => _movement;
+
+    public Pizza Pizza { get; private set; }
+
+    private void Start()
+    {
+        Pizza = new Pizza();
+        Pizza.ToppingAdded += (topping) => Debug.Log(topping);//
+    }
 
     public void TryClimb(float vertical)
     {
