@@ -13,10 +13,11 @@ public class Player : PhysicsEventBroadcaster
 
     public Pizza Pizza { get; private set; }
 
-    private void Start()
+    private void OnEnable()
     {
         Pizza = new Pizza();
-        Pizza.ToppingAdded += (topping) => Debug.Log(topping);//
+        Pizza.ToppingAdded += () => Debug.Log("Added");//
+        Pizza.Cleared += () => Debug.Log("Cleared");//
     }
 
     public void TryClimb(float vertical)
@@ -29,5 +30,4 @@ public class Player : PhysicsEventBroadcaster
 
         Movement.AddStaticHorizontalVelocity(vertical);
     }
-
 }

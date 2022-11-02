@@ -15,5 +15,6 @@ public class Topping : PhysicsEventBroadcaster
     public enum Kind
     {
         Default,
+        Second,
     }
 }

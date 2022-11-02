@@ -7,7 +7,7 @@ public class PhysicsCompositeRoot : MonoBehaviour
     private static List<PhysicsEventBroadcaster> _broadcasters
         = new List<PhysicsEventBroadcaster>();
 
-    private PhysicsRouter _physicsRouter;
+    public static PhysicsRouter _physicsRouter;
 
     public static void RegisterPhysicsModel(PhysicsEventBroadcaster model)
     {
@@ -19,13 +19,10 @@ public class PhysicsCompositeRoot : MonoBehaviour
         _broadcasters.Remove(model);
     }
 
-    private void Start()
+    private void Awake()
     {
         var register = new RecordsRegister();
         _physicsRouter = new PhysicsRouter(register.GetRecords);
-
-        foreach (var broadcaster in _broadcasters)
-            broadcaster.Init(_physicsRouter);
 
         StartCoroutine(RecordCollisions());
     }

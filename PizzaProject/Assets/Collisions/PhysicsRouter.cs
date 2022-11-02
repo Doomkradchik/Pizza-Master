@@ -64,11 +64,12 @@ public abstract class Record
 
 public sealed class Record<T1, T2> : Record
 {
-    public Record(Action<T1, T2> onColllided)
+    public Record(Action<T1, T2> onEnterred)
     {
-        _onCollided = onColllided;
+        _onEnterred = onEnterred;
     }
-    private Action<T1, T2> _onCollided;
+
+    private Action<T1, T2> _onEnterred;
 
     public override bool IsTarget((object, object) pair)
     {
@@ -83,11 +84,11 @@ public sealed class Record<T1, T2> : Record
 
     public void Do(T1 left, T2 right)
     {
-        _onCollided?.Invoke(left, right);
+        _onEnterred?.Invoke(left, right);
     }
 
     public void Do(T2 left, T1 right)
     {
-        _onCollided?.Invoke(right, left);
+        _onEnterred?.Invoke(right, left);
     }
 }

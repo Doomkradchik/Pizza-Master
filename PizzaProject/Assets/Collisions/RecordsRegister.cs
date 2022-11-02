@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class RecordsRegister
 {
@@ -14,6 +11,10 @@ public class RecordsRegister
 
         yield return IfCollided((Player player, Spring spring) => {
             spring.TryAccelerate(player);
+        });
+
+        yield return IfCollided((Player player, House house) => {
+            house.CheckCurrentGameState();
         });
     }
 

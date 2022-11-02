@@ -17,5 +17,8 @@ public class InputManager : MonoBehaviour
                 _player.Jumper.PlayJumpAnimation(_player.Jumper.BaseData);
 
         _player.TryClimb(vertical);
+
+        if (Input.GetKeyDown(KeyCode.E))
+            _player.Pizza.CleanUp();
     }
 }
