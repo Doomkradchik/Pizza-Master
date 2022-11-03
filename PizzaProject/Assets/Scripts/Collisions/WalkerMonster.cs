@@ -65,12 +65,15 @@ public class WalkerMonster : Enemy
         var direction = Vector2.right * RightDirection;
         direction.Normalize();
 
-        var ray = new Ray2D(transform.position + Vector3.right * _deltaRay , direction);
+        var ray = new Ray2D(transform.position + Vector3.right * _deltaRay * RightDirection, direction);
         var hit = Physics2D.Raycast(ray.origin, ray.direction, DISTANCE_WALL_RAY);
 
         Debug.DrawRay(ray.origin, ray.direction * DISTANCE_WALL_RAY);
 
         if (hit == false)
+            return;
+
+        if (hit.collider.isTrigger)
             return;
 
         _right = !_right;
