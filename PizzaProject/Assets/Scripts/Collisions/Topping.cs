@@ -4,11 +4,12 @@ public class Topping : PhysicsEventBroadcaster
 {
     [SerializeField]
     private Kind _toppingsKind;
-    public Kind ToppingKind => _toppingsKind;
 
     public void OnPlayerCollided(Player player)
     {
-        player.Pizza.AddTopping(this);
+        player.Pizza.AddTopping(new Pizza.ToppingData(_toppingsKind,
+            GetComponent<SpriteRenderer>().sprite));
+
         Destroy(gameObject);
     }
 

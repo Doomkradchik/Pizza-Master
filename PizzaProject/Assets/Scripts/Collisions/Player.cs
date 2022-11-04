@@ -23,7 +23,7 @@ public class Player : PhysicsEventBroadcaster
     private void OnEnable()
     {
         Pizza = new Pizza();
-        Pizza.ToppingAdded += () => Debug.Log("Added");//
+        //Pizza.ToppingAdded += () => Debug.Log("Added");//
         Pizza.Cleared += () => Debug.Log("Cleared");//
 
         Movement.Moved += () => _animator.SetBool(_isWalkingKey, true);

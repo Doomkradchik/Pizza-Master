@@ -1,39 +1,41 @@
 ﻿using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public sealed class Pizza
 {
     public Pizza()
     {
-        _components = new List<PizzaComponent>();
+        _components = new List<ToppingSection>();
     }
 
-    public event Action ToppingAdded;
+    public event Action<ToppingSection> ToppingAdded;
     public event Action Cleared;
     public bool TrashCollided { get; set; }
-    public IEnumerable<PizzaComponent> Components => _components;
+    public IEnumerable<ToppingSection> Sections => _components;
 
-    private List<PizzaComponent> _components;
+    private List<ToppingSection> _components;
 
     public bool CanClean()
     {
         return TrashCollided && _components.Count > 0;
     }
 
-    public void AddTopping(Topping topping)
+    public void AddTopping(ToppingData topping)
     {
-        var component = _components
-            .Find(component => component.Kind == topping.ToppingKind);
+        var section = _components
+            .Find(component => component.Toppping.Kind == topping.Kind);
 
-        if (component == null)
+        if (section == null)
         {
-            _components.Add(new PizzaComponent(topping.ToppingKind));
-            ToppingAdded?.Invoke();
+            var newSection = new ToppingSection(topping);
+            _components.Add(newSection);
+            ToppingAdded?.Invoke(newSection);
             return;
         }
 
-        component.Amount++;
-        ToppingAdded?.Invoke();
+        section.Amount++;
+        ToppingAdded?.Invoke(section);
     }
 
     public void CleanUp()
@@ -41,25 +43,37 @@ public sealed class Pizza
         if (CanClean() == false)
             return;
 
-        _components = new List<PizzaComponent>();
+        _components = new List<ToppingSection>();
         Cleared?.Invoke();
     }
 
     [Serializable]
-    public class PizzaComponent
+    public class ToppingSection
     {
-        public PizzaComponent(Topping.Kind kind, float amount = 1f)
+        public ToppingSection(ToppingData topping, int amount = 1)
         {
-            Kind = kind;
+            Toppping = topping;
             _amount = amount;
         }
-        public Topping.Kind Kind { get; }
-        private float _amount;
+        public ToppingData Toppping { get; }
+        private int _amount;
 
-        public float Amount
+        public int Amount
         {
             get => _amount;
             set => _amount = value;
         }
+    }
+
+    public class ToppingData
+    {
+        public ToppingData(Topping.Kind Kind, Sprite toppingIcon)
+        {
+            this.Kind = Kind;
+            ToppingIcon = toppingIcon;
+        }
+
+        public Topping.Kind Kind { get; }
+        public Sprite ToppingIcon { get; }
     }
 }
