@@ -1,9 +1,16 @@
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IPauseHandler
 {
     [SerializeField]
     private Player _player;
+
+    public void Pause() => enabled = false;
+
+    public void Unpause() => enabled = true;
+
+    private void Awake() => PauseManager.Subscribe(this);
+    private void OnDestroy() => PauseManager.Unsubscribe(this);
 
     void Update()
     {

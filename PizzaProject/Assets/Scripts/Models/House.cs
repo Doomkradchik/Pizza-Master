@@ -40,10 +40,15 @@ public class House : PhysicsEventBroadcaster
        _player.Pizza.Cleared -= OnCleared;
     }
 
-    public void CheckCurrentGameState()
+    public bool CheckCurrentGameState()
     {
         if (_isOppened)
+        {
+            _player.OnWin();
             GameEnded?.Invoke();
+        }
+
+        return _isOppened;
     }
 
     private void InitializeRequestsView()

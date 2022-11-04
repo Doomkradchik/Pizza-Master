@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class FallingSimulationComponent : MonoBehaviour
+public class FallingSimulationComponent : MonoBehaviour, IPauseHandler
 {
     [SerializeField]
     private LayerMask _layerMask;
@@ -15,12 +15,25 @@ public class FallingSimulationComponent : MonoBehaviour
     private const float MIN_DISTANCE = 0.3f;
 
     private float _direction;
-
+    private Coroutine _fallingRoutine;
+    private void Awake() => PauseManager.Subscribe(this);
 
     public void StartFalling(Action onLanded)
     {
-        StartCoroutine(Falling(onLanded));
+        _fallingRoutine = StartCoroutine(Falling(onLanded));
     }
+
+    public void Pause()
+    {
+        if (this == null)
+        {
+            PauseManager.Unsubscribe(this);
+            return;
+        }
+        Destroy(gameObject);
+    }
+
+    public void Unpause() { }
 
     private IEnumerator Falling(Action onLanded)
     {

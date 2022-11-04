@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ToppingsSpawner : MonoBehaviour
+public class ToppingsSpawner : MonoBehaviour, IPauseHandler
 {
     [SerializeField]
     private float _deltaTime;
@@ -19,7 +19,15 @@ public class ToppingsSpawner : MonoBehaviour
 
     private readonly float _verticalOffset = 1f;
 
-    private void Start()
+    private void Awake() => PauseManager.Subscribe(this);
+    private void OnDestroy() => PauseManager.Unsubscribe(this);
+
+    public void Pause()
+    {
+        StopAllCoroutines();
+    }
+
+    public void Unpause()
     {
         StartCoroutine(SpawningRoutine());
     }

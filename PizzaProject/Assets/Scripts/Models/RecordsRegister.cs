@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class RecordsRegister
 {
     public event Action GameOverred;
+
+    private bool _gameEnded = false;
     public IEnumerable<Record> GetRecords()
     {
         yield return IfCollided((Player player, Topping topping) => {
@@ -15,11 +17,16 @@ public class RecordsRegister
         });
 
         yield return IfCollided((Player player, House house) => {
-            house.CheckCurrentGameState();
+            _gameEnded = house.CheckCurrentGameState();
         });
 
         yield return IfCollided((Player player, Enemy enemy) => {
-            GameOverred?.Invoke();
+            if(_gameEnded == false)
+            {
+                player.StartDyingAnimation();
+                GameOverred?.Invoke();
+                _gameEnded = true;
+            }      
         });
 
         yield return IfCollided((WalkerMonster enemy, Detector detector) => {
