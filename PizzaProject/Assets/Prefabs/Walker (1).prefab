@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseData:
     _height: 1.55
-    _duration: 3
+    _duration: 1.97
     _verticalAnimation:
       serializedVersion: 2
       m_Curve:
@@ -201,7 +201,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!95 &8388187451042453803
 Animator:
   serializedVersion: 4
