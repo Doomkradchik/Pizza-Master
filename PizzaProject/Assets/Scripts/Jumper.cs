@@ -13,7 +13,7 @@ public class Jumper : MonoBehaviour
     public bool Grounded { get; private set; } = true;
     public Data BaseData => _baseData;
     private Coroutine _jumpAnimation;
-    private const float MIN_FALLING_VELOCITY = -3f;
+    private const float MIN_FALLING_VELOCITY = -2f;
 
     public event Action MovedUp;
     public event Action Landed;

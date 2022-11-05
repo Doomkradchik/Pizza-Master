@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _springProperties:
-    _height: 3
-    _duration: 2
+    _height: 4
+    _duration: 2.6
     _verticalAnimation:
       serializedVersion: 2
       m_Curve:
